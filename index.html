@@ -90,6 +90,23 @@ h2{font-size:clamp(22px,5vw,30px)}
 .srow .btn{flex:none;background:#fff;color:#0B3D91}
 .smsg{min-height:20px;margin:12px 0 0;font-size:14px;font-weight:700}
 .sgo{display:inline-block;margin-top:12px;background:#fff;color:#0B3D91}
+.picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px}
+.pick{background:var(--bg-soft);color:var(--ink);border:2px solid transparent;border-radius:20px;padding:22px 12px;text-align:center;font:inherit;min-width:0}
+.pick[aria-expanded="true"]{border-color:var(--blue);background:var(--blue-tint)}
+.pick .pe{display:block;font-size:34px;line-height:1;margin-bottom:10px}
+.pick b{display:block;font-size:15px}
+.pick small{display:block;margin-top:4px;font-size:12px;color:var(--ink-2)}
+.pform{max-width:560px;margin:18px auto 0;background:var(--bg-soft);border-radius:24px;padding:22px 20px}
+.pform label{display:block;font-size:13px;font-weight:700;margin-top:14px}
+.pform label:first-child{margin-top:0}
+.pform input[type=email],.pform input[type=text],.pform textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;font-size:14.5px;margin-top:6px}
+.pform textarea{min-height:90px;resize:vertical}
+.pform .chk{display:flex;gap:8px;align-items:flex-start;font-weight:500;font-size:12.5px;color:var(--ink-2);margin-top:16px}
+.pform .chk input{margin-top:3px}
+.pform .btn{width:100%;margin-top:16px}
+.pform .pt{margin:0 0 12px;font-weight:900;font-size:16px}
+.pmsg{font-size:13px;text-align:center;margin:10px 0 0;min-height:18px;color:var(--ink-2)}
+.cbtn{margin:0 14px 14px;width:calc(100% - 28px)}
 .back{background:none;border:0;color:var(--blue);font-weight:700;font-size:13px;padding:0 0 14px}
 .lw{text-align:right}
 .card .lw:empty{height:14px}
@@ -212,7 +229,7 @@ footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color
 </head>
 <body>
 <nav class="nav"><div class="wrap">
-  <a href="#hero">처음</a><a href="#md">MD 소개</a><a href="#today">오늘의 책</a><a href="#read">먼저 읽은 책</a><a href="#promo">오늘도 노력 중</a><a href="#goods">굿즈</a><a href="#notes">비하인드</a><a href="#secret">시크릿</a><a href="#say">메시지</a>
+  <a href="#hero">처음</a><a href="#md">MD 소개</a><a href="#today">오늘의 책</a><a href="#read">먼저 읽은 책</a><a href="#promo">오늘도 달리는 중</a><a href="#goods">굿즈</a><a href="#notes">MD의 업무 일지</a><a href="#play">놀기 신청</a><a href="#secret">시크릿</a><a href="#say">메시지</a>
 </div></nav>
 
 <main class="wrap">
@@ -234,14 +251,14 @@ footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color
 
 <section id="today">
   <div class="emoji" style="text-align:center">📖</div>
-  <h2>MD가 가장 추천하는 <span class="mark">오늘의 책</span></h2>
+  <h2>가장 추천하는 <span class="mark">오늘의 책</span></h2>
   <div class="grid" id="grid"></div>
   <p class="sample">※ 해제 문구는 샘플입니다. 확정 도서와 MD 해제(90자 이내)로 교체해 주세요.</p>
 </section>
 
 <section id="read">
   <div class="emoji" style="text-align:center">👀</div>
-  <h2>MD가 <span class="mark">먼저 읽은 책</span></h2>
+  <h2><span class="mark">먼저 읽은 책</span></h2>
   <p class="sub">표지, 제목, 저자와 함께 MD가 직접 쓴 해제를 담았어요.</p>
   <div class="pager" id="readList"></div>
   <div class="rctl"><button type="button" class="arr" id="rprev" aria-label="이전 책">‹</button><div class="dots" id="readDots"></div><span class="rcount" id="rcount"></span><button type="button" class="arr" id="rnext" aria-label="다음 책">›</button></div>
@@ -250,7 +267,7 @@ footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color
 
 <section id="promo">
   <div class="emoji" style="text-align:center">🏃</div>
-  <h2>오늘도 <span class="mark">노력 중!</span></h2>
+  <h2>오늘도 <span class="mark">달리는 중!</span></h2>
   <p class="sub">지금까지 준비한 프로모션을 한눈에 만나보세요.</p>
   <div class="grid g3" id="promoGrid"></div>
   <p class="sample">※ 프로모션 이미지는 아직 연결 전이라 제목 타일로 보여요. 이미지 URL이 정해지면 교체해 주세요.</p>
@@ -264,10 +281,27 @@ footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color
 
 <section id="notes">
   <div class="emoji" style="text-align:center">📝</div>
-  <h2>비하인드 <span class="mark">노트</span></h2>
+  <h2>MD의 <span class="mark">업무 일지</span></h2>
   <p class="sub">책상 위에 붙어 있는 포스트잇 몇 장, 슬쩍 보여드릴게요.</p>
   <div class="notes" id="notesBox"></div>
   <p class="draft">※ 문구는 초안입니다. 실제 에피소드로 교체해 주세요.</p>
+</section>
+
+<section id="play">
+  <div class="emoji" style="text-align:center">🎈</div>
+  <h2>놀기 <span class="mark">신청!</span></h2>
+  <p class="sub">MD랑 같이 놀아요. 원하는 걸 골라 신청해 주세요.</p>
+  <div class="picks">
+    <button type="button" class="pick" id="pickRec" aria-expanded="false"><span class="pe">📮</span><b>비문학 책 추천 받기</b><small>내 취향에 맞는 책을 MD가 골라드려요</small></button>
+    <button type="button" class="pick" id="pickSwap" aria-expanded="false"><span class="pe">📖</span><b>교환독서 신청하기</b><small>MD가 읽던 책을 독자님께 보내드려요</small></button>
+  </div>
+  <div class="pform" id="recPanel" hidden></div>
+  <div class="pwrap" id="swapPanel" hidden>
+    <p class="sub" style="margin-top:22px">0월 00일까지 읽고 메모와 밑줄이 담긴 책을 독자님께 보내드려요!</p>
+    <div class="grid" id="swapGrid"></div>
+    <div class="pform" id="swapForm" hidden></div>
+  </div>
+  <p class="sample">※ 교환독서 도서와 기간(0월 00일)은 샘플입니다. 개인정보 수집·이용 안내 문구는 확정 후 교체해 주세요.</p>
 </section>
 
 <section id="secret">
@@ -476,6 +510,57 @@ footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color
    ['NOTE 03','지금까지 프로모션 6개, 오늘도 노력 중!'],
    ['NOTE 04','책상 위 팻말: 정상영업中 🐬🐻🐧']].forEach(function(n){
     var d=el('div','nt');d.appendChild(el('small','',n[0]));d.appendChild(document.createTextNode(n[1]));$('#notesBox').appendChild(d)});
+
+  /* ---------- 놀기 신청 ---------- */
+  function mkForm(host,title,fields,kind,extra){
+    host.textContent='';host.appendChild(el('p','pt',title));
+    var inputs={};
+    fields.forEach(function(fd){
+      var lb=el('label','',fd.label),inp=el(fd.tag==='textarea'?'textarea':'input');
+      if(fd.tag!=='textarea')inp.type=fd.type||'text';
+      inp.placeholder=fd.ph||'';inp.maxLength=fd.max||300;if(fd.req)inp.required=true;
+      lb.appendChild(inp);host.appendChild(lb);inputs[fd.k]=inp});
+    var ck=el('label','chk'),cb=el('input');cb.type='checkbox';cb.required=true;ck.appendChild(cb);
+    ck.appendChild(el('span','','신청 안내를 위한 이메일 수집·이용에 동의해요.'));host.appendChild(ck);
+    var btn=el('button','btn',kind==='rec'?'신청하기':'이 책에 신청하기');btn.type='submit';host.appendChild(btn);
+    var msg=el('p','pmsg');msg.setAttribute('role','status');host.appendChild(msg);
+    var form=el('form');while(host.firstChild)form.appendChild(host.firstChild);host.appendChild(form);form.autocomplete='off';
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      var d={kind:kind,ts:Date.now()};for(var k in inputs)d[k]=inputs[k].value.trim();
+      if(extra)for(var x in extra)d[x]=extra[x];
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){msg.textContent='메일 주소를 확인해 주세요.';return}
+      if(!dbRef||!uid){msg.textContent='지금은 저장소에 연결되지 않았어요. 공유 링크로 로그인한 뒤 다시 시도해 주세요.';return}
+      btn.disabled=true;
+      try{await dbRef.doc('requests/'+uid).collection('items').add(d);form.reset();msg.textContent='신청이 접수됐어요. 고맙습니다! 💙'}
+      catch(err){msg.textContent='신청에 실패했어요. 잠시 뒤 다시 시도해 주세요.'}
+      btn.disabled=false});
+  }
+  var recP=$('#recPanel'),swapP=$('#swapPanel'),pR=$('#pickRec'),pS=$('#pickSwap');
+  function pickToggle(btn,panel,other,otherPanel){
+    var open=panel.hidden;panel.hidden=!open;btn.setAttribute('aria-expanded',String(open));
+    otherPanel.hidden=true;other.setAttribute('aria-expanded','false');
+    if(open)panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  mkForm(recP,'비문학 책 추천 받기',[
+    {k:'email',label:'연락받을 메일',type:'email',ph:'example@email.com',req:1,max:100},
+    {k:'likes',label:'좋아하는 비문학 책 3권 (또는 좋아하는 분류)',tag:'textarea',ph:'예) 책 제목 3권 / 인문, 과학 등 분류',req:1,max:300},
+    {k:'dislike',label:'싫어하는 책 1권',ph:'책 제목',req:1,max:100}],'rec');
+  pR.addEventListener('click',function(){pickToggle(pR,recP,pS,swapP)});
+  pS.addEventListener('click',function(){pickToggle(pS,swapP,pR,recP)});
+  var swapF=$('#swapForm');
+  ['b5','b6'].forEach(function(id,i){ // TODO: MD가 지금 읽는 책으로 교체
+    var b=byId(id),c=el('article','card');c.appendChild(coverBox(b,i,'cover'));
+    var body=el('div','cbody');body.appendChild(el('div','tag',MDS[b.md].e+' '+MDS[b.md].n+' 읽는 중'));
+    body.appendChild(el('h3','',cut(b.t,25)));body.appendChild(el('p','','0월 00일까지 읽고 메모와 밑줄을 담아 보내드려요.'));c.appendChild(body);
+    var bt=el('button','btn cbtn','이 책에 신청하기');bt.type='button';
+    bt.addEventListener('click',function(){
+      swapF.hidden=false;
+      mkForm(swapF,'「'+b.t+'」 교환독서 신청',[
+        {k:'email',label:'연락받을 메일',type:'email',ph:'example@email.com',req:1,max:100},
+        {k:'reason',label:'신청 이유',tag:'textarea',ph:'이 책을 읽고 싶은 이유를 적어주세요',req:1,max:500}],'swap',{book:b.t});
+      swapF.scrollIntoView({behavior:'smooth',block:'nearest'})});
+    c.appendChild(bt);$('#swapGrid').appendChild(c)});
 
   /* ---------- 시크릿 퀴즈 ---------- */
   // TODO: 정답 확정 후 교체 (여러 표현 허용). 공백·대소문자는 무시하고 비교
