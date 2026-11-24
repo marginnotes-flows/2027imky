@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>비문학 MD 정상영업</title>
+<style>body{margin:0;font-size:14px}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --bg-soft:#F4F7FD; --card:#FFFFFF; --ink:#16213B; --ink-2:#4B5878; --ink-3:#8A94AD;
+  --line:#E3E9F6; --blue:#2F6FED; --blue-deep:#0B3D91; --blue-tint:#EAF0FD; --blue-mark:#CFE0FF;
+  --bar:#F1F4FA; --on-blue:#FFFFFF; --note:#FFF8DC; --note-ink:#3A3321; --shadow:0 6px 20px rgba(30,58,138,.08);
+  --t1:#DCE8FF; --t2:#D6EEF7; --t3:#E4E1FA; --t4:#DDEBFF; --t5:#D3E4F5; --t6:#E8E6FF; --t7:#D9E7F2; --t8:#E0EAFF;
+  --font:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif; --hand:'Nanum Pen Script','Noto Sans KR',cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1424; --bg-soft:#141C32; --card:#18213A; --ink:#EAF0FF; --ink-2:#B3BEDB; --ink-3:#7F8CAD;
+  --line:#26314F; --blue:#6E9CFF; --blue-deep:#9DBBFF; --blue-tint:#1C2A52; --blue-mark:#2A4A93;
+  --bar:#18213A; --on-blue:#0E1424; --note:#3A3520; --note-ink:#F5EBC4; --shadow:0 6px 20px rgba(0,0,0,.35);
+  --t1:#223158; --t2:#1E3A4C; --t3:#2B2A55; --t4:#233560; --t5:#1F3550; --t6:#2C2B5E; --t7:#20384A; --t8:#26325C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --bg-soft:#141C32; --card:#18213A; --ink:#EAF0FF; --ink-2:#B3BEDB; --ink-3:#7F8CAD;
+  --line:#26314F; --blue:#6E9CFF; --blue-deep:#9DBBFF; --blue-tint:#1C2A52; --blue-mark:#2A4A93;
+  --bar:#18213A; --on-blue:#0E1424; --note:#3A3520; --note-ink:#F5EBC4; --shadow:0 6px 20px rgba(0,0,0,.35);
+  --t1:#223158; --t2:#1E3A4C; --t3:#2B2A55; --t4:#233560; --t5:#1F3550; --t6:#2C2B5E; --t7:#20384A; --t8:#26325C; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+/* 상단 내비 (깊이 없이 한 번에 이동) */
+.nav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:6px 12px;border-radius:999px;background:var(--bar)}
+.nav a:hover{color:var(--blue)}
+section{padding-block:56px 8px;scroll-margin-top:52px}
+.hero{padding-top:36px;text-align:center}
+.hero img{width:100%;max-width:560px;border-radius:20px;display:block;margin:0 auto 22px}
+.hero-fallback{display:none}
+.emoji{font-size:44px;line-height:1}
+h1,h2{margin:12px 0 0;font-weight:900;letter-spacing:-.02em;text-align:center}
+h1{font-size:clamp(26px,6vw,38px)}
+h2{font-size:clamp(22px,5vw,30px)}
+.mark{background:linear-gradient(transparent 58%,var(--blue-mark) 58%);padding:0 4px}
+.sub{margin:14px auto 0;max-width:520px;text-align:center;color:var(--ink-2);font-size:15px}
+.pill{display:table;margin:20px auto 0;position:relative;background:var(--blue-tint);color:var(--blue);font-weight:700;font-size:13px;padding:7px 16px;border-radius:999px}
+.pill::after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:var(--blue-tint);transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.bar{margin-top:30px;background:var(--bar);border-radius:14px;padding:14px 18px;display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center;justify-content:space-between;font-size:14px}
+.bar b{font-weight:900;color:var(--blue)}
+.bar .links{display:flex;gap:14px;color:var(--ink-3);font-size:13px}
+/* MD 소개 */
+.mds{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+.md{background:var(--bg-soft);border-radius:20px;padding:20px 8px 16px;text-align:center}
+.md .av{width:64px;height:64px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:32px;margin:0 auto 10px;box-shadow:var(--shadow)}
+.md b{display:block;font-size:14px}
+.md p{margin:4px 0 12px;font-size:12px;color:var(--ink-2);min-height:36px;padding-inline:4px}
+.btn-sm{display:inline-block;background:var(--blue);color:var(--on-blue);font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px}
+.md.find{background:var(--blue);color:var(--on-blue);border:0;font:inherit;display:block;width:100%}
+.md.find .av{background:var(--on-blue)}
+.md.find p{color:var(--on-blue);opacity:.9}
+.md.find .btn-sm{background:var(--on-blue);color:var(--blue)}
+.mdlist{display:grid;gap:14px;margin-top:28px}
+@media(min-width:760px){.mdlist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mdc{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.mav{flex:none;width:72px;height:72px;border-radius:50%;background:var(--bg-soft);display:grid;place-items:center;font-size:36px}
+.mdi{flex:1;min-width:0}
+.mdi .tag{font-size:11px;font-weight:700;color:var(--blue)}
+.mdi h3{margin:3px 0 12px;font-size:16px;line-height:1.35}
+.mdl{margin:0 0 12px;display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:12.5px}
+.mdl dt{color:var(--blue);font-weight:700;white-space:nowrap}
+.mdl dd{margin:0;color:var(--ink-2);min-width:0}
+.findbar{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--blue);color:var(--on-blue);border:0;border-radius:18px;padding:16px;font:inherit;min-width:0}
+.findbar .fav{background:var(--on-blue)}
+.findbar .mdi{display:block}
+.findbar .ftag{display:block;font-size:11px;font-weight:700;opacity:.85}
+.findbar{align-items:center}
+.findbar b{display:block;font-size:16px;line-height:1.35;margin:3px 0 12px}
+.findbar small{display:block;font-size:12.5px;opacity:.9;margin-bottom:12px}
+.findbar .btn-sm{background:var(--on-blue);color:var(--blue)}
+.secret{background:linear-gradient(160deg,var(--blue-deep),#1E3A8A);color:#fff;border-radius:24px;padding:36px 20px;text-align:center}
+.secret h2{color:#fff}.secret .sub{color:#DCE6FF}
+.sform{max-width:460px;margin:22px auto 0}
+.sq{margin:0 0 12px;font-weight:700;font-size:15px}
+.srow{display:flex;gap:8px}
+.srow input{flex:1;min-width:0;border:0;border-radius:999px;padding:12px 16px;font:inherit;font-size:14.5px;background:#fff;color:#16213B}
+.srow .btn{flex:none;background:#fff;color:#0B3D91}
+.smsg{min-height:20px;margin:12px 0 0;font-size:14px;font-weight:700}
+.sgo{display:inline-block;margin-top:12px;background:#fff;color:#0B3D91}
+.back{background:none;border:0;color:var(--blue);font-weight:700;font-size:13px;padding:0 0 14px}
+.lw{text-align:right}
+.card .lw:empty{height:14px}
+.pcover img{width:100%;height:100%;object-fit:cover;box-shadow:none;border-radius:0}
+@media(min-width:760px){.g3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rpage{flex:0 0 100%;scroll-snap-align:start;display:grid;gap:14px;align-content:start;min-width:0}
+.rlist{display:grid;gap:14px;margin-top:26px}
+@media(min-width:760px){.rpage{grid-template-columns:repeat(3,minmax(0,1fr))}.mds{grid-template-columns:repeat(4,1fr)}}
+.rd{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;min-width:0}
+.rcover{position:relative;flex:none;width:96px;aspect-ratio:3/4;border-radius:8px;overflow:hidden;display:grid;place-items:center}
+.rcover .tile{position:absolute;inset:0;display:grid;place-items:center;padding:8px;text-align:center}
+.rcover .tile span{font-weight:900;font-size:12px;line-height:1.3;color:var(--blue-deep)}
+.rcover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.rinfo{flex:1;min-width:0}
+.rinfo .tag{font-size:11px;font-weight:700;color:var(--blue)}
+.rinfo h3{margin:3px 0 0;font-size:15px;line-height:1.35}
+.rinfo .au{font-size:12px;color:var(--ink-3);margin-top:2px}
+.rbody{margin:10px 0 6px;font-size:13px;color:var(--ink-2);line-height:1.65;white-space:pre-line}
+.more{background:var(--blue-tint);color:var(--blue);border:0;border-radius:999px;font-size:12px;font-weight:700;padding:5px 12px;margin-right:10px}
+/* 카드 그리드 */
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-size:13px;font-weight:500;padding:7px 14px;border-radius:999px}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.cover{position:relative;aspect-ratio:1/1;display:grid;place-items:center;padding:18px;overflow:hidden}
+.cover .tile{position:absolute;inset:0;display:grid;place-items:center;padding:14px;text-align:center}
+.cover .tile span{font-weight:900;font-size:15px;line-height:1.3;color:var(--blue-deep);position:relative;z-index:1}
+.cover img{position:relative;z-index:2;height:100%;width:auto;max-width:100%;object-fit:contain;box-shadow:0 8px 18px rgba(0,0,0,.22);border-radius:3px}
+.cbody{padding:14px 14px 0;flex:1;min-width:0}
+.cbody .tag{font-size:11px;font-weight:700;color:var(--blue)}
+.cbody h3{margin:4px 0 2px;font-size:15px;line-height:1.35}
+.cbody .au{font-size:12px;color:var(--ink-3)}
+.cbody p{margin:8px 0 0;font-size:12.5px;color:var(--ink-2)}
+.cfoot{display:flex;align-items:flex-end;justify-content:space-between;padding:14px 0 0 14px;margin-top:10px}
+.cfoot .n{font-size:13px;color:var(--ink-3);padding-bottom:14px}
+.cfoot .n b{font-size:17px;color:var(--ink);font-weight:900}
+.go{width:52px;height:46px;border:0;background:var(--blue-tint);color:var(--blue);border-top-left-radius:22px;font-size:20px;font-weight:700;display:grid;place-items:center}
+.go[aria-pressed="true"]{background:var(--blue);color:var(--on-blue)}
+.go:disabled{opacity:.5}
+.link{display:inline-block;font-size:12px;color:var(--ink-3);margin:0 14px 12px 0;text-decoration:underline}
+.hint{text-align:center;font-size:13px;color:var(--ink-3);margin-top:16px;min-height:20px}
+.sample{font-size:11px;color:var(--ink-3);text-align:center;margin-top:6px}
+/* 퀴즈 */
+.quiz{max-width:560px;margin:26px auto 0;background:var(--bg-soft);border-radius:24px;padding:24px 20px}
+.qprog{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.qprog i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.qq{margin:18px 0 14px;font-size:18px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px;margin-top:10px}
+.opt:hover,.opt:focus-visible{border-color:var(--blue)}
+.res{text-align:center}
+.res .big{font-size:56px}
+.res h3{margin:8px 0 4px;font-size:22px}
+.res .why{color:var(--ink-2);font-size:14px}
+.rbooks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}
+.rbooks div{background:var(--card);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:700;color:var(--blue-deep)}
+.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.btn{background:var(--blue);color:var(--on-blue);border:0;font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px}
+.btn.ghost{background:var(--blue-tint);color:var(--blue)}
+/* 프로모션 */
+.pager{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:26px;scrollbar-width:none;cursor:grab}
+.pager::-webkit-scrollbar{display:none}
+.page{flex:0 0 100%;scroll-snap-align:start;background:var(--bg-soft);border-radius:20px;overflow:hidden;min-width:0}
+.prow{display:flex;align-items:center;gap:12px;padding:14px 16px;-webkit-user-drag:none}
+.prow+.prow{border-top:1px solid var(--line)}
+.prow .ic{width:38px;height:38px;border-radius:11px;background:var(--blue);color:var(--on-blue);display:grid;place-items:center;font-weight:900;flex:none}
+.prow .tx{flex:1;min-width:0}
+.prow b{font-size:14.5px;display:block}
+.prow small{font-size:12px;color:var(--ink-3)}
+.live{font-size:10.5px;background:var(--blue);color:var(--on-blue);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--blue)}
+/* 굿즈 */
+.goods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:26px}
+.good .sq{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--blue-tint);display:grid;place-items:center}
+.good .sq span{font-size:11px;color:var(--ink-3);padding:6px;text-align:center}
+.good .sq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.good b{display:block;text-align:center;font-size:12.5px;margin-top:8px}
+/* 비하인드 노트 */
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}
+@media(min-width:760px){.notes{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.nt{background:var(--note);color:var(--note-ink);border-radius:4px 4px 18px 4px;padding:18px 16px;font-family:var(--hand);font-size:22px;line-height:1.25;box-shadow:var(--shadow);transform:rotate(-1deg)}
+.nt:nth-child(even){transform:rotate(1.2deg)}
+.nt small{display:block;font-family:var(--font);font-size:11px;font-weight:700;opacity:.65;margin-bottom:8px}
+.draft{font-size:11px;color:var(--ink-3);text-align:center;margin-top:12px}
+/* 메시지 */
+.form{max-width:560px;margin:26px auto 0;background:var(--bg-soft);border-radius:24px;padding:22px 20px}
+.form input,.form textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;font-size:14.5px;margin-top:10px}
+.form textarea{min-height:120px;resize:vertical}
+.form .btn{width:100%;margin-top:14px}
+.msg{font-size:13px;text-align:center;margin-top:10px;min-height:18px;color:var(--ink-2)}
+footer{margin-top:64px;padding-block:28px;text-align:center;font-size:12px;color:var(--ink-3);border-top:1px solid var(--line)}
+@media(max-width:380px){.md p{font-size:11px}.nt{font-size:19px}}
+</style>
+
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a href="#hero">처음</a><a href="#md">MD 소개</a><a href="#today">오늘의 책</a><a href="#read">먼저 읽은 책</a><a href="#promo">오늘도 노력 중</a><a href="#goods">굿즈</a><a href="#notes">비하인드</a><a href="#secret">시크릿</a><a href="#say">메시지</a>
+</div></nav>
+
+<main class="wrap">
+<section class="hero" id="hero">
+  <img id="heroImg" alt="비문학 MD 헤더 일러스트" src="https://contents.kyobobook.co.kr/pmtn/2026/event/nonfiction_header_f8463afcbefa48cdaa6afd775a5cbca4.png">
+  <div class="emoji">📚</div>
+  <h1>우리 비문학, <span class="mark">정상영업</span> 합니다!</h1>
+  <p class="sub">단 한 권이라도 독자님들께 닿길 바라는 마음을 꾹꾹 눌러 담아 오늘도 열심히 일하고 있어요.</p>
+</section>
+
+<section id="md">
+  <div class="emoji" style="text-align:center">🐾</div>
+  <h2>비문학 MD를 <span class="mark">소개합니다</span></h2>
+  <div id="mdPanel">
+    <div class="mdlist" id="mdList"></div>
+    <button type="button" class="findbar" id="findBtn"><span class="mav fav">🧭</span><span class="mdi"><span class="ftag">MD 매칭 테스트</span><b>나와 맞는 비문학 MD 찾기</b><span class="btn-sm">테스트 하기 →</span></span></button>
+  </div>
+  <div class="quiz" id="quizBox" hidden></div>
+</section>
+
+<section id="today">
+  <div class="emoji" style="text-align:center">📖</div>
+  <h2>MD가 가장 추천하는 <span class="mark">오늘의 책</span></h2>
+  <div class="grid" id="grid"></div>
+  <p class="sample">※ 해제 문구는 샘플입니다. 확정 도서와 MD 해제(90자 이내)로 교체해 주세요.</p>
+</section>
+
+<section id="read">
+  <div class="emoji" style="text-align:center">👀</div>
+  <h2>MD가 <span class="mark">먼저 읽은 책</span></h2>
+  <p class="sub">표지, 제목, 저자와 함께 MD가 직접 쓴 해제를 담았어요.</p>
+  <div class="pager" id="readList"></div>
+  <div class="dots" id="readDots"></div>
+  <p class="sample">※ 저자명·해제는 샘플입니다. 해제 본문은 최대 1,000자까지 들어갑니다.</p>
+</section>
+
+<section id="promo">
+  <div class="emoji" style="text-align:center">🏃</div>
+  <h2>오늘도 <span class="mark">노력 중!</span></h2>
+  <p class="sub">지금까지 준비한 프로모션을 한눈에 만나보세요.</p>
+  <div class="grid g3" id="promoGrid"></div>
+  <p class="sample">※ 프로모션 이미지는 아직 연결 전이라 제목 타일로 보여요. 이미지 URL이 정해지면 교체해 주세요.</p>
+</section>
+
+<section id="goods">
+  <div class="emoji" style="text-align:center">🎁</div>
+  <h2>굿즈도 <span class="mark">잘 만들어요</span></h2>
+  <div class="goods" id="goodsBox"></div>
+</section>
+
+<section id="notes">
+  <div class="emoji" style="text-align:center">📝</div>
+  <h2>비하인드 <span class="mark">노트</span></h2>
+  <p class="sub">책상 위에 붙어 있는 포스트잇 몇 장, 슬쩍 보여드릴게요.</p>
+  <div class="notes" id="notesBox"></div>
+  <p class="draft">※ 문구는 초안입니다. 실제 에피소드로 교체해 주세요.</p>
+</section>
+
+<section id="secret">
+  <div class="secret">
+    <div class="emoji">🤫</div>
+    <h2>여기까지 오다니...</h2>
+    <p class="sub">비문학에 꽤 진심이시군요?<br>독자님을 위한 시크릿 혜택을 준비했어요.<br>비밀 코드를 입력하면 입장해요!</p>
+    <form class="sform" id="sform" autocomplete="off">
+      <p class="sq">오늘의 퀴즈: 인문 MD의 도서 취향은?</p>
+      <div class="srow"><input id="sans" maxlength="30" placeholder="정답을 입력해 주세요" aria-label="퀴즈 정답"><button class="btn" type="submit">입력하기</button></div>
+      <p class="smsg" id="smsg" role="status"></p>
+      <a class="btn sgo" id="sgo" href="https://www.kyobobook.co.kr/" target="_blank" rel="noopener noreferrer" hidden>교보문고로 이동 →</a>
+    </form>
+  </div>
+</section>
+
+<section id="say">
+  <div class="emoji" style="text-align:center">💌</div>
+  <h2>하고싶은 말이 <span class="mark">있나요?</span></h2>
+  <p class="sub">추천사 등 섭외 제안은 물론 이번 이벤트 좋았어요- 하는 짧은 격려와 피드백까지 무엇이든 말씀해주세요!</p>
+  <form class="form" id="form">
+    <div class="chips" id="types" style="margin-top:0"></div>
+    <input id="nick" maxlength="20" placeholder="닉네임 (선택)" autocomplete="off">
+    <textarea id="text" maxlength="600" placeholder="메시지를 적어주세요" required></textarea>
+    <p class="msg" style="margin-bottom:0">연락처 등 개인정보는 적지 않으셔도 괜찮아요.</p>
+    <button class="btn" type="submit" id="send">비문학 MD들에게 메시지 남기기</button>
+    <p class="msg" id="fmsg"></p>
+  </form>
+</section>
+</main>
+<footer>비문학 MD 정상영업 중 🐬🐻🐧</footer>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var MDS={h:{e:'🐬',n:'인문 MD',line:'깊이 있는 이야기를 천천히 음미하는 당신, 느긋한 교양 수집가!'},
+           p:{e:'🐻',n:'정치사회 MD',line:'세상의 결을 읽고 싶은 당신, 성실하게 게으른 관찰자!'},
+           s:{e:'🐧',n:'과학 MD',line:'궁금한 건 귀엽게 파고드는 당신, 호기심 탐험가!'}};
+  // TODO: 샘플 데이터. 실제 도서/담당 MD/한줄평으로 교체
+  var BOOKS=[
+    {id:'b1',isbn:'9791155818800',pid:'S000218550920',t:'길을 찾는 책 도덕경',md:'h'},
+    {id:'b2',isbn:'9791169814010',pid:'S000218683593',t:'티무르 승전기',md:'h'},
+    {id:'b3',isbn:'9791170874416',pid:'S000219564760',t:'고대 이집트의 밤하늘',md:'s'},
+    {id:'b4',isbn:'9791171715015',pid:'S000217600601',t:'넥스트 씽킹',md:'s'},
+    {id:'b5',isbn:'9791193591529',pid:'S000219940524',t:'케어리스 피플',md:'p'},
+    {id:'b6',isbn:'9791194442592',pid:'S000218668254',t:'다극세계가 온다',md:'p'},
+    {id:'b7',isbn:'9791163144625',pid:'S000219790433',t:'다시 전태일',md:'p'},
+    {id:'b8',isbn:'9791191133400',pid:'S000219518697',t:'4·3, 아카이브로 본 역사',md:'h'}];
+  var TINTS=['--t1','--t2','--t3','--t4','--t5','--t6','--t7','--t8'];
+  // TODO: 예시 표지 2종을 번갈아 노출 중. 실제 도서 확정 시 b.isbn 기반 표지로 교체
+  var EX=['https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9791155819470.jpg','https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788947503396.jpg'];
+  var cover=function(b){return EX[BOOKS.indexOf(b)%2]};
+  var url=function(b){return 'https://product.kyobobook.co.kr/detail/'+b.pid};
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+
+  // placeholder 링크
+  document.querySelectorAll('[data-todo]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+  var hi=$('#heroImg');hi.addEventListener('error',function(){hi.style.display='none'});if(hi.complete&&hi.naturalWidth===0)hi.style.display='none';
+
+  var uid=null,dbRef=null;
+  /* ---------- 오늘의 책 / 먼저 읽은 책 ---------- */
+  var cut=function(t,n){return t.length>n?t.slice(0,n-1)+'…':t};
+  // TODO: 샘플 문구. MD가 쓴 실제 해제(오늘의 책 90자, 먼저 읽은 책 1,000자)로 교체
+  var SD='MD가 직접 쓴 해제가 이 자리에 들어가요. 표지와 제목, 짧은 해제만 간결하게 보여드립니다.';
+  var SB='MD가 먼저 읽고 직접 쓴 해제 본문이 이 자리에 들어갑니다. 처음에는 100자 정도만 보이고, 전문 보기를 누르면 나머지 글이 모두 펼쳐져요. 책을 읽으며 밑줄 그은 문장, 누구에게 권하고 싶은지, 어떤 날 펼치면 좋은지를 담아 최대 1,000자까지 적을 수 있어요. 지금 보이는 문장은 레이아웃 확인을 위한 샘플입니다.';
+  var TODAY=['b1','b2','b3','b4'],READ=['b5','b6','b7','b8'];
+  function byId(id){return BOOKS.filter(function(b){return b.id===id})[0]}
+  function coverBox(b,i,cls){
+    var cv=el('div',cls);cv.style.background='var('+TINTS[i%8]+')';
+    var tile=el('div','tile');tile.appendChild(el('span','',b.t));cv.appendChild(tile);
+    var im=new Image();im.alt=b.t+' 표지';im.loading='lazy';im.src=cover(b);im.addEventListener('error',function(){im.remove()});cv.appendChild(im);
+    return cv;
+  }
+  TODAY.forEach(function(id,i){
+    var b=byId(id),c=el('article','card');c.appendChild(coverBox(b,i,'cover'));
+    var body=el('div','cbody');body.appendChild(el('div','tag',MDS[b.md].e+' '+MDS[b.md].n+' 추천'));
+    body.appendChild(el('h3','',cut(b.t,25)));body.appendChild(el('p','',cut(SD,90)));c.appendChild(body);
+    var a=el('a','link','책 보러가기');a.href=url(b);a.target='_blank';a.rel='noopener noreferrer';
+    var w=el('div','lw');w.appendChild(a);c.appendChild(w);$('#grid').appendChild(c);
+  });
+  READ.forEach(function(id,i){
+    var b=byId(id),full=cut(SB,1000),short=cut(full,100),open=false;
+    var r=el('article','rd');r.appendChild(coverBox(b,i+4,'rcover'));
+    var inf=el('div','rinfo');inf.appendChild(el('div','tag',MDS[b.md].e+' '+MDS[b.md].n+' 추천'));
+    inf.appendChild(el('h3','',b.t));inf.appendChild(el('div','au','저자명'));
+    var p=el('p','rbody',short);inf.appendChild(p);
+    var bt=el('button','more','전문 보기');bt.type='button';bt.setAttribute('aria-expanded','false');
+    bt.addEventListener('click',function(){open=!open;p.textContent=open?full:short;bt.textContent=open?'접기':'전문 보기';bt.setAttribute('aria-expanded',String(open))});
+    inf.appendChild(bt);
+    var a=el('a','link','책 보러가기');a.href=url(b);a.target='_blank';a.rel='noopener noreferrer';inf.appendChild(a);
+    r.appendChild(inf);
+    var pi=Math.floor(i/3),pgs=$('#readList').children;
+    if(!pgs[pi]){$('#readList').appendChild(el('div','rpage'));$('#readDots').appendChild(el('i',pi===0?'on':''))}
+    pgs[pi].appendChild(r);
+  });
+
+
+  /* ---------- MD 소개 카드 ---------- */
+  // TODO: 한 줄 소개 외 항목은 샘플 문구. MD가 직접 쓴 내용으로 교체
+  var FIELDS=['독서 스타일','선호하는 도서 분야','도서 취향','좋아하는 책','좋아하는 음악','그 외 좋아하는 것'];
+  var MDP=[
+    {k:'h',one:'피아노 콩쿨에서 입상하는 할머니가 되고파'},
+    {k:'p',one:'성실하게 게으름'},
+    {k:'s',one:'귀여운게 딱 좋아!'}];
+  MDP.forEach(function(m){
+    var c=el('article','mdc'),av=el('div','mav',MDS[m.k].e);c.appendChild(av);
+    var inf=el('div','mdi');inf.appendChild(el('div','tag',MDS[m.k].n));inf.appendChild(el('h3','',m.one));
+    var dl=el('dl','mdl');FIELDS.forEach(function(f){dl.appendChild(el('dt','',f));dl.appendChild(el('dd','','MD가 직접 쓴 내용이 들어가요.'))});
+    dl.hidden=true;inf.appendChild(dl);
+    var tg=el('button','more','전체 보기');tg.type='button';tg.setAttribute('aria-expanded','false');
+    tg.addEventListener('click',function(){dl.hidden=!dl.hidden;tg.textContent=dl.hidden?'전체 보기':'접기';tg.setAttribute('aria-expanded',String(!dl.hidden))});
+    inf.appendChild(tg);
+    var a=el('a','btn-sm','친해지기 →');a.href='#';a.addEventListener('click',function(e){e.preventDefault()});inf.appendChild(a);
+    c.appendChild(inf);$('#mdList').appendChild(c);
+  });
+
+  $('#mdList').appendChild($('#findBtn')); // 과학 MD 오른쪽 빈칸
+  (function(){ // 3개씩 한 세트, 가로 롤링 (+PC 마우스 드래그)
+    var pg=$('#readList'),dots=$('#readDots'),down=false,sx=0,sl=0,moved=false;
+    pg.addEventListener('scroll',function(){var n=Math.round(pg.scrollLeft/pg.clientWidth);
+      dots.querySelectorAll('i').forEach(function(d,k){d.className=k===n?'on':''})});
+    pg.addEventListener('mousedown',function(e){if(e.target.closest('button,a'))return;down=true;moved=false;sx=e.pageX;sl=pg.scrollLeft;pg.style.scrollSnapType='none';e.preventDefault()});
+    window.addEventListener('mousemove',function(e){if(!down)return;var dx=e.pageX-sx;if(Math.abs(dx)>4)moved=true;pg.scrollLeft=sl-dx});
+    window.addEventListener('mouseup',function(){if(!down)return;down=false;pg.style.scrollSnapType='';
+      pg.scrollTo({left:Math.round(pg.scrollLeft/pg.clientWidth)*pg.clientWidth,behavior:'smooth'})});
+  })();
+
+  /* ---------- MD 찾기 퀴즈 (MD 소개 영역 안) ---------- */
+  var Q=[
+    {q:'쉬는 날, 가장 끌리는 서점 코너는?',o:[['오래된 이야기가 쌓인 코너','h'],['요즘 뉴스 속 이유가 궁금한 코너','p'],['신기한 과학 그림책 코너','s']]},
+    {q:'책 한 권을 고르는 기준은?',o:[['문장이 아름다운가','h'],['세상을 보는 눈이 달라지는가','p'],['읽고 나면 누군가에게 말해주고 싶은가','s']]},
+    {q:'독서 메이트로 어울리는 건?',o:[['따뜻한 차와 느린 음악','h'],['커피와 메모장','p'],['간식과 호기심 가득한 질문들','s']]},
+    {q:'나를 한마디로 하면?',o:[['여유로운 수집가','h'],['성실한 관찰자','p'],['귀여운 탐험가','s']]}];
+  var qi=0,score={h:0,p:0,s:0},qb=$('#quizBox'),panel=$('#mdPanel');
+  function qHead(){var back=el('button','back','← MD 소개로');back.type='button';
+    back.addEventListener('click',function(){qb.hidden=true;panel.hidden=false;$('#md').scrollIntoView({block:'start'})});qb.appendChild(back)}
+  function qRender(){
+    qb.textContent='';qHead();
+    if(qi>=Q.length)return qResult();
+    var pr=el('div','qprog'),bar=el('i');bar.style.width=(qi/Q.length*100)+'%';pr.appendChild(bar);qb.appendChild(pr);
+    qb.appendChild(el('div','qq',(qi+1)+'. '+Q[qi].q));
+    Q[qi].o.forEach(function(o){var b=el('button','opt',o[0]);b.type='button';
+      b.addEventListener('click',function(){score[o[1]]++;qi++;qRender()});qb.appendChild(b)});
+  }
+  function qResult(){
+    var k='h';['h','p','s'].forEach(function(x){if(score[x]>score[k])k=x});
+    var m=MDS[k],r=el('div','res');
+    r.appendChild(el('div','big',m.e));r.appendChild(el('h3','','나와 맞는 MD는 '+m.n+'!'));r.appendChild(el('p','why',m.line));
+    var rb=el('div','rbooks');BOOKS.filter(function(b){return b.md===k}).slice(0,3).forEach(function(b){rb.appendChild(el('div','',b.t))});
+    r.appendChild(rb);
+    var row=el('div','row'),re=el('button','btn ghost','다시 해보기');re.type='button';
+    re.addEventListener('click',function(){qi=0;score={h:0,p:0,s:0};qRender()});
+    var cp=el('button','btn','결과 복사하기');cp.type='button';
+    cp.addEventListener('click',function(){
+      var t='나와 맞는 비문학 MD는 '+m.e+' '+m.n+'! '+m.line;
+      var ok=function(){cp.textContent='복사했어요 ✓'};
+      try{navigator.clipboard.writeText(t).then(ok,function(){cp.textContent=t})}catch(e){cp.textContent=t}});
+    row.appendChild(re);row.appendChild(cp);r.appendChild(row);qb.appendChild(r);
+  }
+  $('#findBtn').addEventListener('click',function(){qi=0;score={h:0,p:0,s:0};panel.hidden=true;qb.hidden=false;qRender();$('#md').scrollIntoView({block:'start'})});
+
+  /* ---------- 프로모션 ---------- */
+  var P=[ // 최신순. 맨 위는 항상 진행중. img: 프로모션 이미지 URL (TODO)
+    {t:'교보문고 인문교양 대상',d:'작가·출판인·서점인이 선정한 가장 탁월한 책',u:'https://event.kyobobook.co.kr/make/247642',live:1,img:''},
+    {t:'플랫 X 교보문고 여성서사 책 창고 #7월',d:'세상의 경계를 넓히는 플랫 추천 도서',u:'https://event.kyobobook.co.kr/detail/247520',img:''},
+    {t:'봄의 교양공부',d:'나의 교양 점수는?',u:'https://event.kyobobook.co.kr/make/245538',img:''},
+    {t:'2026 여성의 날: Give To Gain',d:'큐레이터 3인의 여성서사 독서 패키지',u:'https://event.kyobobook.co.kr/detail/244615',img:''},
+    {t:'과학책 리뷰왕',d:'과학 독자가 직접 선택한 책',u:'https://event.kyobobook.co.kr/make/245248',img:''},
+    {t:'뜨거운 감자: AI, 당신의 선택은?',d:'AI가 쓴 문장을 맞춰봐!',u:'https://event.kyobobook.co.kr/make/243934',img:''}];
+  P.forEach(function(p,i){
+    var a=el('a','card');a.href=p.u;a.target='_blank';a.rel='noopener noreferrer';a.draggable=false;
+    var cv=el('div','cover pcover');cv.style.background='var('+TINTS[(i*3)%8]+')';
+    var tile=el('div','tile');tile.appendChild(el('span','',p.t));cv.appendChild(tile);
+    if(p.img){var im=new Image();im.alt=p.t;im.loading='lazy';im.src=p.img;im.addEventListener('error',function(){im.remove()});cv.appendChild(im)}
+    a.appendChild(cv);
+    var body=el('div','cbody'),h=el('h3','',p.t);
+    if(p.live)h.appendChild(el('span','live','진행중'));
+    body.appendChild(h);body.appendChild(el('p','',p.d));a.appendChild(body);
+    a.appendChild(el('div','lw',''));
+    $('#promoGrid').appendChild(a);
+  });
+
+  /* ---------- 굿즈 ---------- */
+  var base='https://contents.kyobobook.co.kr/pmtn/2026/event/';
+  [['논픽션 티셔츠',base+'tshirt_a7439f0e62d2434f9609fce7a33f7ebe.jpg'],
+   ['논픽션 패브릭백 (라이트그린)',base+'lightgreen_f82a47f16eb749a6aaa3eb99c232c242.jpg'],
+   ['논픽션 패브릭백 (브라운)',base+'brown_29625b20b48a4c86b25ba7e2b41f27d7.jpg']].forEach(function(g){
+    var d=el('div','good'),sq=el('div','sq');sq.appendChild(el('span','',g[0]));
+    var im=new Image();im.alt=g[0];im.src=g[1];im.addEventListener('error',function(){im.remove()});sq.appendChild(im);
+    d.appendChild(sq);d.appendChild(el('b','',g[0]));$('#goodsBox').appendChild(d)});
+
+  /* ---------- 비하인드 노트 (초안) ---------- */
+  [['NOTE 01','티셔츠에 새긴 한 줄: NONFICTION IS NOT DEAD YET'],
+   ['NOTE 02','패브릭백에도 같은 마음으로: non-fiction is not dead'],
+   ['NOTE 03','지금까지 프로모션 6개, 오늘도 노력 중!'],
+   ['NOTE 04','책상 위 팻말: 정상영업中 🐬🐻🐧']].forEach(function(n){
+    var d=el('div','nt');d.appendChild(el('small','',n[0]));d.appendChild(document.createTextNode(n[1]));$('#notesBox').appendChild(d)});
+
+  /* ---------- 시크릿 퀴즈 ---------- */
+  // TODO: 정답 확정 후 교체 (여러 표현 허용). 공백·대소문자는 무시하고 비교
+  var ANSWERS=['정답'];
+  var norm=function(t){return t.replace(/\s+/g,'').toLowerCase()};
+  $('#sform').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=norm($('#sans').value),m=$('#smsg'),go=$('#sgo');
+    if(!v){m.textContent='정답을 입력해 주세요.';go.hidden=true;return}
+    var ok=ANSWERS.some(function(a){return norm(a)===v});
+    m.textContent=ok?'정답이에요! 시크릿 혜택 입장 완료 🎉':'오답이에요! 다시 도전해보세요.';
+    go.hidden=!ok;
+  });
+
+  /* ---------- 메시지 ---------- */
+  var type='추천사·섭외',types=$('#types');
+  function renderTypes(){types.textContent='';['추천사·섭외','이벤트 후기','기타'].forEach(function(t){
+    var b=el('button','chip',t);b.type='button';b.setAttribute('aria-pressed',String(type===t));
+    b.addEventListener('click',function(){type=t;renderTypes()});types.appendChild(b)})}
+  renderTypes();
+  $('#form').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var text=$('#text').value.trim(),fm=$('#fmsg'),btn=$('#send');if(!text)return;
+    if(!dbRef||!uid){fm.textContent='지금은 저장소에 연결되지 않았어요. 공유 링크로 로그인한 뒤 다시 시도해 주세요.';return}
+    btn.disabled=true;
+    try{await dbRef.doc('messages/'+uid).collection('items').add({type:type,nick:$('#nick').value.trim().slice(0,20),text:text,ts:Date.now()});
+      $('#text').value='';fm.textContent='전달됐어요. 고맙습니다! 💙'}
+    catch(err){fm.textContent='전송에 실패했어요. 공유 링크로 로그인했는지 확인해 주세요.'}
+    btn.disabled=false;
+  });
+
+  /* ---------- db 연결 (메시지 저장용, 없어도 페이지는 동작) ---------- */
+  (async function(){
+    try{var u=await claude.use('user');uid=u?await u.id():null;dbRef=await claude.use('db')}catch(e){}
+  })();
+})();
+</script>
+
+</body>
+</html>
